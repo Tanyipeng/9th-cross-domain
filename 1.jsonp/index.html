@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function jsonp({ url, params, cb }) {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        const obj = { ...params, cb };
+        const arr = [];
+        script.onload = () => {
+          console.log('load')
+        }
+        window[cb] = (data) => {
+          resolve(data);
+          document.body.removeChild(script);
+        };
+        for (let key in obj) {
+          arr.push(`${key}=${obj[key]}`);
+        }
+        script.src = `${url}?${arr.join('&')}`;
+        document.body.appendChild(script);
+      })
+    }
+
+    jsonp({
+      url: 'http://localhost:8000/say',
+      params: {
+        wd: '我爱你'
+      },
+      cb: 'show'
+    }).then(data => console.log(data));
+  </script>
+</body>
+
+</html>

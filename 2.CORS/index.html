@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const xhr = new XMLHttpRequest();
+    // document.cookie = 'name=typ';
+    // xhr.withCredentials = true;
+    xhr.open('GET', 'http://localhost:8000/say?wd=我爱你', true);
+    // xhr.setRequestHeader('name', 'typ');
+    // xhr.setRequestHeader('age', 18);
+    xhr.send();
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        console.log(xhr.response);
+        // console.log(xhr.getResponseHeader('name'));
+      }
+    }
+  </script>
+</body>
+</html>
